@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crocodile Facts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #factDisplay {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crocodile Facts</h1>
+        <button id="generateFactButton">Generate Fact</button>
+        <p id="factDisplay"></p>
+    </div>
+    <script>
+        const bipedal_dinosaur_facts = [
+    "T-Rex and other theropods were bipedal, meaning they walked on two legs",
+    "Some dinosaurs could temporarily balance on one leg while kicking, similar to modern birds",
+    "Bipedal dinosaurs had strong tail muscles to help maintain balance",
+    "Many bipedal dinosaurs had relatively small arms, as they primarily used their legs for movement",
+    "Velociraptors, despite being bipedal, could run at speeds of up to 40 mph"
+    ];
+
+        document.getElementById('generateFactButton').addEventListener('click', function() {
+            const randomIndex = Math.floor(Math.random() * bipedal_dinosaur_facts.length);
+            const randomFact = bipedal_dinosaur_facts[randomIndex];
+            document.getElementById('factDisplay').textContent = randomFact;
+        });
+    </script>
+</body>
+</html>
