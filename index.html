@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crocodile Facts</title>
+    <title>Crocodile Facts with 3D Dinosaur</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f8ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scrollbars */
         }
 
         .container {
-            text-align: center;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1; /* Ensure the container is above the 3D scene */
         }
 
         button {
@@ -51,19 +52,65 @@
         <button id="generateFactButton">Generate Fact</button>
         <p id="factDisplay"></p>
     </div>
+
+    <!-- Three.js and GLTFLoader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/loaders/GLTFLoader.js"></script>
+
     <script>
         const bipedal_dinosaur_facts = [
-    "T-Rex and other theropods were bipedal, meaning they walked on two legs",
-    "Some dinosaurs could temporarily balance on one leg while kicking, similar to modern birds",
-    "Bipedal dinosaurs had strong tail muscles to help maintain balance",
-    "Many bipedal dinosaurs had relatively small arms, as they primarily used their legs for movement",
-    "Velociraptors, despite being bipedal, could run at speeds of up to 40 mph"
-    ];
+            "T-Rex and other theropods were bipedal, meaning they walked on two legs",
+            "Some dinosaurs could temporarily balance on one leg while kicking, similar to modern birds",
+            "Bipedal dinosaurs had strong tail muscles to help maintain balance",
+            "Many bipedal dinosaurs had relatively small arms, as they primarily used their legs for movement",
+            "Velociraptors, despite being bipedal, could run at speeds of up to 40 mph"
+        ];
 
         document.getElementById('generateFactButton').addEventListener('click', function() {
             const randomIndex = Math.floor(Math.random() * bipedal_dinosaur_facts.length);
             const randomFact = bipedal_dinosaur_facts[randomIndex];
             document.getElementById('factDisplay').textContent = randomFact;
+        });
+
+        // Three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Add a light
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(5, 5, 5).normalize();
+        scene.add(light);
+
+        // Load the dinosaur model
+        const loader = new THREE.GLTFLoader();
+        loader.load('path/to/your/dinosaur_model.glb', function(gltf) {
+            const dinosaur = gltf.scene;
+            dinosaur.scale.set(0.5, 0.5, 0.5); // Scale the dinosaur
+            dinosaur.position.set(0, -1, -5); // Position it in the scene
+            scene.add(dinosaur);
+
+            // Animate the dinosaur
+            function animate() {
+                requestAnimationFrame(animate);
+                dinosaur.position.x += 0.01; // Move the dinosaur
+                if (dinosaur.position.x > 5) dinosaur.position.x = -5; // Reset position
+                renderer.render(scene, camera);
+            }
+            animate();
+        }, undefined, function(error) {
+            console.error(error);
+        });
+
+        camera.position.z = 5;
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
 </body>
