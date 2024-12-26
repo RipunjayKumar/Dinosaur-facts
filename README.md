@@ -25,5 +25,5 @@ To run this project locally, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/crocodile-facts.git
+   git clone https://github.com/RipunjayKumar/Dinosaur-facts.git
    cd crocodile-facts
