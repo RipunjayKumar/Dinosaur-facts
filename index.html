@@ -86,7 +86,7 @@
 
         // Load the dinosaur model
         const loader = new THREE.GLTFLoader();
-        loader.load('path/to/your/dinosaur_model.glb', function(gltf) {
+        loader.load('./near_accurate_ceratosaurus.glb', function(gltf) {
             const dinosaur = gltf.scene;
             dinosaur.scale.set(0.5, 0.5, 0.5); // Scale the dinosaur
             dinosaur.position.set(0, -1, -5); // Position it in the scene
